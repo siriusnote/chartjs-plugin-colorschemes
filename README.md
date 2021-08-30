@@ -6,7 +6,7 @@
 
 You can pick the perfect color combination for your charts from the predefined color schemes, which are based on popular tools such as [ColorBrewer](http://colorbrewer2.org), [Microsoft Office](https://products.office.com) and [Tableau](https://www.tableau.com).
 
-This plugin requires Chart.js 2.5.0 or later.
+This plugin requires Chart.js 3 or later
 
 ## Installation
 
