@@ -1,19 +1,14 @@
 'use strict';
 
-import {Chart} from 'chart.js';
+import { Chart, DatasetController } from 'chart.js';
+import * as helpers from 'chart.js/helpers'
 
-var helpers = Chart.helpers;
 
 // Element models are always reset when hovering in Chart.js 2.7.2 or earlier
-var hoverReset = Chart.DatasetController.prototype.removeHoverStyle.length === 2;
+var hoverReset = DatasetController.prototype.removeHoverStyle.length === 2;
 
 var EXPANDO_KEY = '$colorschemes';
 
-// pluginBase snippet fixes the chartjs 3 incompatibility, and is backwards-compatible
-// by Github user gebrits (https://github.com/gebrits/chartjs-plugin-colorschemes)
-//
-// Chartjs 2 => Chart.defaults.global
-// Chartjs 3 => Chart.defaults
 const pluginBase = Chart.defaults.global || Chart.defaults;
 pluginBase.plugins.colorschemes = {
 	scheme: 'brewer.Paired12',
@@ -22,7 +17,7 @@ pluginBase.plugins.colorschemes = {
 	override: false
 };
 
-function getScheme(scheme) {
+const getScheme = (scheme) => {
 	var colorschemes, matches, arr, category;
 
 	if (helpers.isArray(scheme)) {
@@ -47,23 +42,19 @@ function getScheme(scheme) {
 }
 
 var ColorSchemesPlugin = {
-	id: 'colorschemes',
-
-	beforeUpdate: function(chart, args, options) {
-		// Please note that in v3, the args argument was added. It was not used before it was added,
-		// so we just check if it is not actually our options object
-		if (options === undefined) {
+    id: 'colorschemes',
+    beforeUpdate: (chart, args, options) => {
+        if (options === undefined) {
 			options = args;
 		}
 
-		var scheme = getScheme(options.scheme);
+        var scheme = getScheme(options.scheme);
 		var fillAlpha = options.fillAlpha;
 		var reverse = options.reverse;
 		var override = options.override;
 		var custom = options.custom;
 		var schemeClone, customResult, length, colorIndex, color;
-
-		if (scheme) {
+        if (scheme) {
 
 			if (typeof custom === 'function') {
 				// clone the original scheme
@@ -179,8 +170,8 @@ var ColorSchemesPlugin = {
 			this.afterUpdate(chart);
 		}
 	}
-};
+}
 
-Chart.plugins.register(ColorSchemesPlugin);
+Chart.register(ColorSchemesPlugin);
 
 export default ColorSchemesPlugin;
