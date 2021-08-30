@@ -1,6 +1,6 @@
 'use strict';
 
-import Chart from 'chart.js';
+import {Chart} from 'chart.js';
 import fixture from './fixture';
 import matchers from './matchers';
 import utils from './utils';
